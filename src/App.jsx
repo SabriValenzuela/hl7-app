@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
+import logo from "./assets/hl7-fhir.png";
 import "./App.css";
 import { GetPatient } from "./components/Get/GetPatient";
 import { CreatePatient } from "./components/Create/CreatePatient";
@@ -23,12 +24,12 @@ function App() {
 
   return (
     <>
-      <image src="./images/hl7-fhir.png" />
+      <image src="./assets/hl7-fhir.png" />
       <div
         style={{
           display: "flex",
           alignContent: "center",
-          justifyContent: "space-around",
+          justifyContent: "space-evenly",
         }}
       >
         <CreatePatient addPatient={addPatient} />

@@ -71,9 +71,8 @@ export const CreatePatient = ({ addPatient }) => {
         codigoPostal: 0,
       });
       console.log("Paciente creado exitosamente:", response);
-      
 
-      addPatient(response.id); 
+      addPatient(response.id);
 
       //alert("Paciente creado exitosamente");
     } catch (error) {
@@ -89,11 +88,8 @@ export const CreatePatient = ({ addPatient }) => {
 
   return (
     <div
-      style={{
-        margin: " 20px",
-      }}
+   
     >
-      {" "}
       <div>
         <h3>Crear Paciente</h3>
       </div>

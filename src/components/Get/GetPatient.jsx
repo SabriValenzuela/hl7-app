@@ -8,11 +8,36 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
+  Typography,
 } from "@mui/material";
+
+import ModalComponent from "../../utils/Modal";
+import { DeletePatient } from "../Delete/DeletePatient";
 
 export const GetPatient = ({ patients }) => {
   const [patientData, setPatientData] = useState(patients || []);
   const [loading, setLoading] = useState(true);
+
+  const [open, setOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
+
+  //Modal
+  const handleOpen = (patient) => {
+    setSelectedPatient(patient);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedPatient(null);
+  };
+
+  //Delete
+  const handleDeleteSuccess = (id) => {
+    const updatedPatients = patientData.filter((patient) => patient.id !== id);
+    setPatientData(updatedPatients);
+  };
 
   useEffect(() => {
     const patientIds = patients;
@@ -36,6 +61,8 @@ export const GetPatient = ({ patients }) => {
     }
   }, [patients]);
 
+  console.log(patientData);
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -46,6 +73,7 @@ export const GetPatient = ({ patients }) => {
 
   return (
     <div>
+      <h3>Pacientes Creados</h3>
       {/* {patientData.map((patient, index) => (
         <div key={index}>
           <h4>
@@ -82,9 +110,14 @@ export const GetPatient = ({ patients }) => {
 
       <TableContainer
         component={Paper}
-        sx={{ maxWidth: "100%", overflowX: "auto" }}
+        sx={{
+          maxWidth: "600px",
+          maxHeight: "400px",
+          overflowY: "auto",
+          margin: "0 auto",
+        }}
       >
-        <Table stickyHeader>
+        <Table stickyHeader size="small" sx={{ minWidth: 500 }}>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -96,6 +129,7 @@ export const GetPatient = ({ patients }) => {
               <TableCell>Código Postal</TableCell>
               <TableCell>Género</TableCell>
               <TableCell>Fecha de Nacimiento</TableCell>
+              <TableCell>Borrar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -104,7 +138,12 @@ export const GetPatient = ({ patients }) => {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{patient?.id || "Dato no disponible"}</TableCell>
+                <TableCell>
+                  <Button onClick={() => handleOpen(patient)}>
+                    {patient?.id || "Dato no disponible"}
+                  </Button>
+                </TableCell>
+                {/*     <TableCell>{patient?.id || "Dato no disponible"}</TableCell> */}
                 <TableCell>
                   {patient?.name?.[0]?.given[0] || "Dato no disponible"}
                 </TableCell>
@@ -134,11 +173,21 @@ export const GetPatient = ({ patients }) => {
                 <TableCell>
                   {patient?.birthDate || "Dato no disponible"}
                 </TableCell>
+                <TableCell>
+                  <DeletePatient
+                    id={patient.id}
+                    onDeleteSuccess={handleDeleteSuccess}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+
+      <ModalComponent open={open} onClose={handleClose} title="Editar Paciente">
+        <Typography>Cargando...</Typography>
+      </ModalComponent>
     </div>
   );
 };
