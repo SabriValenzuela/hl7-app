@@ -5,6 +5,7 @@ import logo from "./assets/hl7-fhir.png";
 import "./App.css";
 import { GetPatient } from "./components/Get/GetPatient";
 import { CreatePatient } from "./components/Create/CreatePatient";
+import imghl7 from "./assets/hl7-fhir.png";
 
 function App() {
   const loadPatients = () => {
@@ -22,18 +23,27 @@ function App() {
     setPatients(updatedPatients);
   };
 
+  const handleEditSuccess = (updatedPatientData) => {
+    const updatedPatients = patients.map((patient) =>
+      patient.id === updatedPatientData.id ? updatedPatientData : patient
+    );
+    localStorage.setItem("patientIds", JSON.stringify(updatedPatients));
+    setPatients(updatedPatients);
+  };
+
   return (
     <>
-      <image src="./assets/hl7-fhir.png" />
+      <img src={imghl7} width={"300px"} />
       <div
-        style={{
+      /* style={{
           display: "flex",
           alignContent: "center",
           justifyContent: "space-evenly",
-        }}
+        }} */
       >
-        <CreatePatient addPatient={addPatient} />
-        <GetPatient patients={patients} />
+        <CreatePatient addPatient={addPatient}  />
+        <br />
+        <GetPatient patients={patients} onEditSuccess={handleEditSuccess} />
       </div>
     </>
   );

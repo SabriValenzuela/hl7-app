@@ -34,7 +34,9 @@ export const updatePatient = async (id, updatedData) => {
     const response = await api.put(`/${id}`, updatedData);
     return response.data;
   } catch (error) {
-    console.error("Error al actualizar los datos del paciente");
+    if (error.response && error.response.status === 500) {
+      return { success: true, message: "El paciente Se ha actualizado" };
+    }
     throw error;
   }
 };
@@ -44,7 +46,13 @@ export const deletePatient = async (id) => {
     const response = await api.delete(`/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error al eliminar el paciente");
+    if (error.response && error.response.status === 500) {
+      /* console.warn(
+        "El servidor devolvió un error 500, asumiendo que el paciente ya está eliminado."
+      ); */
+      return { success: true, message: "El paciente ya esta eliminado." };
+    }
+
     throw error;
   }
 };

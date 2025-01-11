@@ -14,8 +14,9 @@ import {
 
 import ModalComponent from "../../utils/Modal";
 import { DeletePatient } from "../Delete/DeletePatient";
+import EditPatient from "../Edit/EditPatient";
 
-export const GetPatient = ({ patients }) => {
+export const GetPatient = ({ patients, onEditSuccess }) => {
   const [patientData, setPatientData] = useState(patients || []);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +48,6 @@ export const GetPatient = ({ patients }) => {
         try {
           const patientPromises = patientIds.map((id) => getPatient(id));
           const patientsData = await Promise.all(patientPromises);
-          console.log(patientsData);
           setPatientData(patientsData);
           setLoading(false);
         } catch (error) {
@@ -61,8 +61,6 @@ export const GetPatient = ({ patients }) => {
     }
   }, [patients]);
 
-  console.log(patientData);
-
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -74,49 +72,8 @@ export const GetPatient = ({ patients }) => {
   return (
     <div>
       <h3>Pacientes Creados</h3>
-      {/* {patientData.map((patient, index) => (
-        <div key={index}>
-          <h4>
-            Nombre: {patient?.name?.[0]?.given[0] || "Dato no disponible"}
-          </h4>
-          <h4>
-            Apellido: {patient?.name?.[0]?.family || "Dato no disponible"}
-          </h4>
-          <h4>
-            Dirección:{" "}
-            {patient?.address?.[0]?.line?.join(", ") || "Dato no disponible"}
-          </h4>
-          <h4>Ciudad: {patient?.address?.[0]?.city || "Dato no disponible"}</h4>
-          <h4>
-            Región: {patient?.address?.[0]?.state || "Dato no disponible"}
-          </h4>
-          <h4>
-            Código Postal:{" "}
-            {patient?.address?.[0]?.postalCode || "Dato no disponible"}
-          </h4>
-          <h4>
-            Género:{" "}
-            {patient?.gender === "male"
-              ? "Masculino"
-              : patient?.gender === "female"
-              ? "Femenino"
-              : "Dato no disponible"}
-          </h4>
-          <h4>
-            Fecha de Nacimiento: {patient?.birthDate || "Dato no disponible"}
-          </h4>
-        </div>
-      ))} */}
 
-      <TableContainer
-        component={Paper}
-        sx={{
-          maxWidth: "600px",
-          maxHeight: "400px",
-          overflowY: "auto",
-          margin: "0 auto",
-        }}
-      >
+      <TableContainer component={Paper}>
         <Table stickyHeader size="small" sx={{ minWidth: 500 }}>
           <TableHead>
             <TableRow>
@@ -184,9 +141,21 @@ export const GetPatient = ({ patients }) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <p>*Para editar un paciente selecciona el ID</p>
 
       <ModalComponent open={open} onClose={handleClose} title="Editar Paciente">
-        <Typography>Cargando...</Typography>
+        {selectedPatient && (
+          <EditPatient
+            patient={selectedPatient}
+            id={selectedPatient.id}
+            handleEditSuccess={onEditSuccess}
+            onClose={handleClose}
+            /*  onEditSuccess={() => {
+              console.log("Paciente actualizado");
+              handleClose();
+            }} */
+          />
+        )}
       </ModalComponent>
     </div>
   );
