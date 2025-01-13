@@ -66,7 +66,7 @@ export const GetPatient = ({ patients, onEditSuccess }) => {
   }
 
   if (patientData.length === 0) {
-    return <div>No se encontraron pacientes.</div>;
+    return <div>No se encontraron pacientes creados.</div>;
   }
 
   return (

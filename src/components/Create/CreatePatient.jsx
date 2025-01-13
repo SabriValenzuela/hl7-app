@@ -57,7 +57,7 @@ export const CreatePatient = ({ addPatient }) => {
     return Object.keys(validationErrors).length === 0; // Retorna true si no hay errores
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
