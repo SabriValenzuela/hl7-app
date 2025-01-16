@@ -1,8 +1,11 @@
-# React + Vite
+# Aplicación HL7 FHIR 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="400px" src="https://curelogix.com/wp-content/uploads/2022/10/HL7_FHIR_logo-1024x356.webp">
 
-Currently, two official plugins are available:
+# HL7 FHIR® 
+Es un estándar de interoperabilidad que combina lo mejor de HL7 V2, HL7 V3 y CDA y se enfoca en facilitar su implementación. Además, usa los estándares web más frecuentes, como XML, JSON y HTTP.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Esta aplicación realiza todas las operaciones CRUD de FHIR, se pueden crear, editar, ver y borrar pacientes.
+
+#Documentación API
+https://hapi.fhir.org/baseR4/swagger-ui/?page=Patient
