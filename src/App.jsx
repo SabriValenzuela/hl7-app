@@ -41,9 +41,20 @@ function App() {
           justifyContent: "space-evenly",
         }} */
       >
-        <CreatePatient addPatient={addPatient}  />
+        <CreatePatient addPatient={addPatient} />
         <br />
         <GetPatient patients={patients} onEditSuccess={handleEditSuccess} />
+        <br />
+        <footer className="footer">
+          Creado por
+          <a
+            className="text-reset fw-bold"
+            href="https://www.linkedin.com/in/sabrina-valenzuela/"
+          >
+            {" "}
+            Sabrina Valenzuela
+          </a>
+        </footer>
       </div>
     </>
   );
